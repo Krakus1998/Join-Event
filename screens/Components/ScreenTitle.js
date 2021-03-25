@@ -5,14 +5,14 @@ import { Icon } from 'react-native-elements';
 export default function ScreenTitle() {
     return (
         <View style={styles.container}>
-            <View style={styles.iconContainer}>
+            {/* <View style={styles.iconContainer}>
                 <Icon
                     name='menu'
                     type='icon'
                     size={35}
                     color='#f50'
                     onPress={() => console.log('')} />
-            </View>
+            </View> */}
             <View style={styles.titleContainer}>
                 <Text style={styles.titleText}>Join Event</Text>
             </View>
@@ -29,13 +29,13 @@ const styles = StyleSheet.create({
         fontSize: 35,
 
     },
-    iconContainer: {
-        justifyContent: 'center',
-        width: '10%',
-        alignItems: 'center',
-    },
+    // iconContainer: {
+    //     justifyContent: 'center',
+    //     width: '10%',
+    //     alignItems: 'center',
+    // },
     titleContainer: {
-        width: '90%',
+        width: '100%',
         alignItems: 'center',
     },
     titleText: {
@@ -43,6 +43,6 @@ const styles = StyleSheet.create({
         fontSize: 35,
         color: '#ffa200',
         textAlign: "center",
-        marginLeft: '-10%',
+        // marginLeft: '-10%',
     }
 });
