@@ -1,12 +1,10 @@
 import React from 'react';
 import { StyleSheet, View, Text, ScrollView } from 'react-native';
-import ScreenTitle from './Components/ScreenTitle';
 import TestJE from './Components/TestJE';
 
 export default function Home() {
   return (
     <View style={styles.container}>
-      <ScreenTitle />
       <View>
         <Text style={styles.header}>Najpopularniejsze wydarzenia miesiąca:</Text>
         <ScrollView horizontal={true} style={styles.items}>
@@ -70,6 +68,6 @@ const styles = StyleSheet.create({
     marginTop:15,
   },
   more:{
-    
+
   }
 });
