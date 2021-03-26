@@ -29,6 +29,7 @@ const styles = StyleSheet.create({
         fontSize: 35,
         color: '#ffa200',
         textAlign: "center",
+        marginLeft: 30,
     },
     icon: {
         position: 'absolute',
