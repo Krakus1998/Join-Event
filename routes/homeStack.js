@@ -10,7 +10,7 @@ const screens = {
         navigationOptions: ({navigation }) => {
             return{   
                              
-                    headerTitle: () => <Header navigation={navigation} title='Join Event'/>,
+                    headerTitle: () => <Header navigation={navigation} title='Strona główna'/>,
             }
         }
     },

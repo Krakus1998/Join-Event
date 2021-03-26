@@ -3,16 +3,17 @@ import { createAppContainer } from 'react-navigation';
 
 // stacks
 import HomeStack from './homeStack';
-import AboutStack from './aboutStack';
+import AboutStack from './eventStack';
 
 // drawer navigation options
 const RootDrawerNavigator = createDrawerNavigator({
-  Home: {
-    screen: HomeStack,
-  },
-  About: {
-    screen: AboutStack,
-  },
+
+    'Strona główna': {
+        screen: HomeStack,
+    },
+    Wydarzenia: {
+        screen: AboutStack,
+    },
 });
 
 export default createAppContainer(RootDrawerNavigator);
