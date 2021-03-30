@@ -12,7 +12,7 @@ const screens = {
                     headerTitle: () => <Header navigation={navigation} title='Wydarzenia'  />,
             }
         }
-    },
+    }
 
 }
 

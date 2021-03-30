@@ -21,6 +21,7 @@ const screens = {
 
         }
     }
+    
 }
 
 const HomeStack = createStackNavigator(screens, {

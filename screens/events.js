@@ -1,9 +1,9 @@
 import React from 'react';
-import { StyleSheet, View, Text, ScrollView } from 'react-native';
+import { StyleSheet, View, Text, ScrollView, Button } from 'react-native';
 import TestJE from './Components/TestJE';
 import Filter from './Components/filter';
 
-export default function About() {
+export default function About(navigation) {
   return (
     <View style={styles.container}>
       <Filter />
