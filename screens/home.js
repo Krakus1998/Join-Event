@@ -1,73 +1,72 @@
-import React from 'react';
-import { StyleSheet, View, Text, ScrollView } from 'react-native';
-import TestJE from './Components/TestJE';
+import React from "react";
+import { StyleSheet, View, Text, ScrollView } from "react-native";
+import TestJE from "../Components/TestJE";
 
 export default function Home() {
   return (
     <View style={styles.container}>
       <View>
-        <Text style={styles.header}>Najpopularniejsze wydarzenia miesiąca:</Text>
+        <Text style={styles.header}>
+          Najpopularniejsze wydarzenia miesiąca:
+        </Text>
         <ScrollView horizontal={true} style={styles.items}>
-          <TestJE/>
-          <TestJE/>
-          <TestJE/>
-          <TestJE/>
-          <TestJE/>
-          <TestJE/>
-          <TestJE/>
-          <TestJE/>
-          <TestJE/>
-          <TestJE/>
-        </ScrollView> 
+          {/* <TestJE />
+          <TestJE />
+          <TestJE />
+          <TestJE />
+          <TestJE />
+          <TestJE />
+          <TestJE />
+          <TestJE />
+          <TestJE />
+          <TestJE /> */}
+        </ScrollView>
         <Text style={styles.header}>Najczęściej odwiedzane miejsca:</Text>
         <ScrollView horizontal={true} style={styles.items}>
-          <TestJE/>
-          <TestJE/>
-          <TestJE/>
-          <TestJE/>
-          <TestJE/>
-          <TestJE/>
-          <TestJE/>
-          <TestJE/>
-          <TestJE/>
-          <TestJE/>
-        </ScrollView> 
+          {/* <TestJE />
+          <TestJE />
+          <TestJE />
+          <TestJE />
+          <TestJE />
+          <TestJE />
+          <TestJE />
+          <TestJE />
+          <TestJE />
+          <TestJE /> */}
+        </ScrollView>
         <Text style={styles.header}>Najwięcej sprzedanych biletów:</Text>
         <ScrollView horizontal={true} style={styles.items}>
-          <TestJE/>
-          <TestJE/>
-          <TestJE/>
-          <TestJE/>
-          <TestJE/>
-          <TestJE/>
-          <TestJE/>
-          <TestJE/>
-          <TestJE/>
-          <TestJE/>
-        </ScrollView> 
+          {/* <TestJE />
+          <TestJE />
+          <TestJE />
+          <TestJE />
+          <TestJE />
+          <TestJE />
+          <TestJE />
+          <TestJE />
+          <TestJE />
+          <TestJE /> */}
+        </ScrollView>
       </View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-  },
+  container: {},
   titleText: {
-    fontFamily: 'BlackOpsOne-Regular',
+    fontFamily: "BlackOpsOne-Regular",
     fontSize: 18,
   },
-  header:{
-    fontFamily: 'Audiowide-Regular',
-        fontSize: 15,
-        color: '#ffa200',
-        marginTop: 20,
-        marginLeft:5,
+  header: {
+    fontFamily: "Audiowide-Regular",
+    fontSize: 15,
+    color: "#ffa200",
+    marginTop: 20,
+    marginLeft: 5,
   },
-  items:{
-    marginTop:15,
+  items: {
+    marginTop: 15,
   },
-  more:{
-
-  }
+  more: {},
 });
