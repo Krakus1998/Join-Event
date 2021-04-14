@@ -1,6 +1,14 @@
-import React from "react";
-import { StyleSheet, Text, View, ScrollView, SafeAreaView } from "react-native";
+import React, { useState } from "react";
+import {
+  StyleSheet,
+  Text,
+  View,
+  ScrollView,
+  SafeAreaView,
+  TouchableWithoutFeedback,
+} from "react-native";
 import styled from "styled-components";
+import { CommonActions } from "@react-navigation/native";
 
 const CustomTextInput = styled.TextInput`
 border:1px solid green;
@@ -12,8 +20,21 @@ text-align:center;
 border-radius:20px
 background-color:white;
 `;
-
-export default function EventDetails(props) {
+const AddBtn = styled.Image`
+  height: 70px;
+  width: 70px;
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+`;
+export default function EventDetails({ navigation, route }) {
+  const [title, setTitle] = useState(route.params.title || "");
+  const [date, setDate] = useState();
+  const [hour, setHour] = useState();
+  const [city, setCity] = useState();
+  const [street, setStreet] = useState();
+  const [author, setAuthor] = useState();
+  const [description, setDescription] = useState();
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView>
@@ -23,8 +44,8 @@ export default function EventDetails(props) {
           </Text>
           <CustomTextInput
             placeholder="Nazwa"
-            value={props.title}
-            onChangeText={(text) => props.setTitle(text)}
+            value={title}
+            onChangeText={(text) => setTitle(text)}
           />
         </View>
 
@@ -32,13 +53,13 @@ export default function EventDetails(props) {
           <Text style={styles.informationTitle}>Data wydarzenia</Text>
           <CustomTextInput
             placeholder="15.09.2022"
-            value={props.date}
-            onChangeText={(text) => props.setDate(text)}
+            value={date}
+            onChangeText={(text) => setDate(text)}
           />
           <CustomTextInput
             placeholder="18:00"
-            value={props.hour}
-            onChangeText={(text) => props.setHour(text)}
+            value={hour}
+            onChangeText={(text) => setHour(text)}
           />
         </View>
 
@@ -46,13 +67,13 @@ export default function EventDetails(props) {
           <Text style={styles.informationTitle}>Adres wydarzenia</Text>
           <CustomTextInput
             placeholder="Kraków"
-            value={props.city}
-            onChangeText={(text) => props.setCity(text)}
+            value={city}
+            onChangeText={(text) => setCity(text)}
           />
           <CustomTextInput
             placeholder="Floriańska 25"
-            value={props.street}
-            onChangeText={(text) => props.setStreet(text)}
+            value={street}
+            onChangeText={(text) => setStreet(text)}
           />
         </View>
 
@@ -60,8 +81,8 @@ export default function EventDetails(props) {
           <Text style={styles.informationTitle}>Twórca</Text>
           <CustomTextInput
             placeholder="Jan Kowalski"
-            value={props.author}
-            onChangeText={(text) => props.setAuthor(text)}
+            value={author}
+            onChangeText={(text) => setAuthor(text)}
           />
         </View>
 
@@ -69,10 +90,26 @@ export default function EventDetails(props) {
           <Text style={styles.informationTitle}>Opis wydarzenia</Text>
           <CustomTextInput
             placeholder="Dużo znaków"
-            value={props.description}
-            onChangeText={(text) => props.setDescription(text)}
+            value={description}
+            onChangeText={(text) => setDescription(text)}
           />
         </View>
+        <TouchableWithoutFeedback
+          onPress={() => {
+            route.params.saveChanges({
+              title,
+              date,
+              hour,
+              city,
+              street,
+              author,
+              description,
+            });
+            navigation.dispatch(CommonActions.goBack());
+          }}
+        >
+          <AddBtn source={require("../assets/plus.png")} />
+        </TouchableWithoutFeedback>
       </ScrollView>
     </SafeAreaView>
   );

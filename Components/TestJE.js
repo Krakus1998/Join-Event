@@ -3,7 +3,6 @@ import {
   StyleSheet,
   View,
   Text,
-  ScrollView,
   Image,
   TouchableOpacity,
   Modal,
@@ -11,7 +10,7 @@ import {
 import { MaterialIcons } from "@expo/vector-icons";
 import EventDetails from "../screens/details";
 
-export default function Test({ data }) {
+export default function Test({ data, onDelete, onOptions }) {
   const [modalOpen, setModalOpen] = useState(false);
   const { title, date, hour, city, street, author, description } = data;
   return (
@@ -24,10 +23,14 @@ export default function Test({ data }) {
             onPress={() => setModalOpen(false)}
           />
           <Text style={styles.header}>Szczegóły</Text>
+          <MaterialIcons name="delete" size={35} onPress={onDelete} />
           <MaterialIcons
             name="add"
             size={35}
-            onPress={() => setModalOpen(false)}
+            onPress={() => {
+              onOptions();
+              setModalOpen(false);
+            }}
           />
         </View>
         <EventDetails
@@ -40,6 +43,7 @@ export default function Test({ data }) {
           description={description}
         ></EventDetails>
       </Modal>
+
       <TouchableOpacity onPress={() => setModalOpen(true)}>
         <View style={styles.container}>
           <Text>{title}</Text>

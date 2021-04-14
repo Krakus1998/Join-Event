@@ -23,26 +23,18 @@ const AddBtn = styled.Image`
   bottom: 20px;
   right: 20px;
 `;
-const CustomTextInput = styled.TextInput`
-border:1px solid green;
-padding:10px;
-margin-bottom:10px;
-color:black;
-width:100%;
-text-align:center;
-border-radius:20px
-background-color:white;
-`;
-export default function About(navigation) {
+export default function About({ navigation }) {
   const [modalOpen, setModalOpen] = useState(false);
-  const [title, setTitle] = useState("Coś");
+  const [title, setTitle] = useState("");
   const [date, setDate] = useState("Coś");
   const [hour, setHour] = useState("Coś");
   const [city, setCity] = useState("Coś");
   const [street, setStreet] = useState("Coś");
   const [author, setAuthor] = useState("Coś");
   const [description, setDescription] = useState("Coś");
+
   const [items, setItems] = useState([]);
+
   const addNote = useCallback(() => {
     if (title.length) {
       const payload = {
@@ -64,11 +56,33 @@ export default function About(navigation) {
       setDescription(null);
     }
   }, [items, title, date, hour, city, street, author, description]);
+
+  const removeItem = (index) => {
+    items.splice(index, 1);
+    setItems([...items]);
+  };
+  const editItem = (index, item) => {
+    items[index] = item;
+    setItems([...items]);
+  };
+
   return (
     <Body>
       <ScrollView vertical={true} style={styles.items}>
-        {items.map((item) => {
-          return <TestJE data={item} />;
+        {items.map((item, index) => {
+          return (
+            <TestJE
+              data={item}
+              onDelete={() => removeItem(index)}
+              onEdit={(item) => editItem(index, item)}
+              navigation={navigation}
+              onOptions={() => {
+                navigation.navigate("Edit", {
+                  saveChanges: (item) => editItem(index, item),
+                });
+              }}
+            />
+          );
         })}
       </ScrollView>
       <Modal visible={modalOpen} animationType="slide">
