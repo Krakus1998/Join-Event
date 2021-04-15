@@ -5,13 +5,12 @@ import {
   ScrollView,
   Modal,
   TouchableWithoutFeedback,
-  SafeAreaView,
-  Text,
 } from "react-native";
 import styled from "styled-components";
 import TestJE from "../Components/TestJE";
-import { MaterialIcons } from "@expo/vector-icons";
+import { MaterialIcons, Ionicons } from "@expo/vector-icons";
 import Form from "../Components/form";
+import { TouchableOpacity } from "react-native-gesture-handler";
 
 const Body = styled.View`
   height: 100%;
@@ -113,6 +112,9 @@ export default function About({ navigation }) {
           description={description}
         />
       </Modal>
+      <TouchableOpacity onPress={() => navigation.navigate("Settings")}>
+        <Ionicons name="md-beer" size={50} />
+      </TouchableOpacity>
       <TouchableWithoutFeedback
         style={styles.bTn}
         onPress={() => setModalOpen(true)}
