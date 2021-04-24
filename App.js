@@ -1,35 +1,13 @@
 import React, { useState, useEffect } from "react";
 // import Home from './screens/home';
-import Navigator from "./routes/drawer";
+import Navigator from "./routes/loginStack";
 import Edit from "./Components/editItem";
 import * as Font from "expo-font";
 import { AppLoading } from "expo";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import * as Firebase from "firebase";
-import Login from "./screens/login";
-import Events from "./screens/events";
-import Settings from "./screens/settings";
-
-const Stack = createStackNavigator();
-const AuthorizationStack = createStackNavigator();
-
-const AuthorizationScreens = () => {
-  return (
-    <AuthorizationStack.Navigator>
-      <AuthorizationStack.Screen name="Login" component={Login} />
-    </AuthorizationStack.Navigator>
-  );
-};
-const Screens = () => {
-  return (
-    <Stack.Navigator>
-      <Stack.Screen name="Events" component={Events} />
-      <Stack.Screen name="Settings" component={Settings} />
-      <Stack.Screen name="Edit" component={Edit} />
-    </Stack.Navigator>
-  );
-};
+import Drawer from "./routes/drawer";
 const getFonts = () =>
   Font.loadAsync({
     "nunito-regular": require("./assets/fonts/Nunito-Regular.ttf"),
@@ -60,9 +38,7 @@ export default function App() {
       // <Home />
       // <Navigator />
 
-      <NavigationContainer>
-        {isAuthenticated ? <Screens /> : <AuthorizationScreens />}
-      </NavigationContainer>
+      isAuthenticated ? <Drawer /> : <Navigator />
     );
   } else {
     return (
