@@ -28,13 +28,15 @@ const AddBtn = styled.Image`
   right: 20px;
 `;
 export default function EventDetails({ navigation, route }) {
-  const [title, setTitle] = useState(route.params.title || "");
-  const [date, setDate] = useState();
-  const [hour, setHour] = useState();
-  const [city, setCity] = useState();
-  const [street, setStreet] = useState();
-  const [author, setAuthor] = useState();
-  const [description, setDescription] = useState();
+  const [title, setTitle] = useState(navigation.state.params.item.title);
+  const [date, setDate] = useState(navigation.getParam("item").date);
+  const [hour, setHour] = useState(navigation.state.params.item.hour);
+  const [city, setCity] = useState(navigation.state.params.item.city);
+  const [street, setStreet] = useState(navigation.state.params.item.street);
+  const [author, setAuthor] = useState(navigation.state.params.item.author);
+  const [description, setDescription] = useState(
+    navigation.state.params.item.description
+  );
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView>
@@ -96,7 +98,9 @@ export default function EventDetails({ navigation, route }) {
         </View>
         <TouchableWithoutFeedback
           onPress={() => {
-            route.params.saveChanges({
+            console.log(title, date, hour, city, street, author, description);
+
+            navigation.state.params.saveChanges({
               title,
               date,
               hour,
@@ -105,7 +109,7 @@ export default function EventDetails({ navigation, route }) {
               author,
               description,
             });
-            navigation.dispatch(CommonActions.goBack());
+            navigation.navigate("About");
           }}
         >
           <AddBtn source={require("../assets/plus.png")} />

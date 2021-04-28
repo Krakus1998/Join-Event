@@ -1,15 +1,30 @@
 import { createStackNavigator } from "react-navigation-stack";
 import { createAppContainer } from "react-navigation";
-import Login from "../screens/login";
-import Drawer from "./drawer";
-import * as Firebase from "firebase";
-import React, { useEffect, useState } from "react";
+import LogIn from "../screens/logIn";
+import Home from "../screens/home";
+// import Register from "../screens/register";
 
 const screens = {
-  Login: {
-    screen: Login,
+  // ekran logowania wywoływany jako 1 w app.js
+  LogIn: {
+    screen: LogIn,
+    navigationOptions: {
+      headerShown: false,
+    },
   },
+  // ekran główny wydarzeń
+  Home: {
+    screen: Home,
+    navigationOptions: {
+      headerShown: false,
+    },
+  },
+  // Register: {
+  //   screen: Register,
+  // },
 };
 
-const LoginStack = createStackNavigator(screens);
-export default createAppContainer(LoginStack);
+// home stack navigator screens
+const HomeStack = createStackNavigator(screens);
+
+export default createAppContainer(HomeStack);

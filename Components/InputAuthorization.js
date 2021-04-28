@@ -11,15 +11,12 @@ export default ({
   ...inputProps
 }) => {
   return (
-    <View style={styles.container}>
-      <View style={styles.labelContainer}>
-        <Text style={labelStyle}>{label}</Text>
-        <Text style={styles.error}>{errorMessage && `${errorMessage}`}</Text>
-      </View>
+    <View>
+      <Text style={styles.error}>{errorMessage && `${errorMessage}`}</Text>
       <TextInput
         underlineColorAndroid="transparent"
         selectionColor="transparent"
-        style={[styles.input, inputStyle]}
+        style={inputStyle}
         value={text}
         onChangeText={onChangeText}
         {...inputProps}
@@ -28,25 +25,9 @@ export default ({
   );
 };
 const styles = StyleSheet.create({
-  container: {
-    paddingHorizontal: 8,
-    margin: 4,
-  },
   error: {
     fontSize: 12,
     color: "red",
     marginLeft: 4,
-  },
-  labelContainer: {
-    flexDirection: "row",
-    marginBottom: 4,
-  },
-  input: {
-    borderBottomColor: "grey",
-    borderBottomWidth: 1,
-    paddingLeft: 4,
-    height: 32,
-    fontSize: 24,
-    color: "black",
   },
 });

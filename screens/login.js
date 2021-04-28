@@ -1,19 +1,20 @@
 import React, { useState } from "react";
-import { StyleSheet, View, Text, TouchableOpacity } from "react-native";
+import {
+  StyleSheet,
+  View,
+  Text,
+  TouchableOpacity,
+  TextInput,
+} from "react-native";
 import Input from "../Components/InputAuthorization";
 import validator from "validator";
 import { auth } from "firebase";
-
+import { globalStyles } from "../styles/global";
+import { MaterialIcons, Ionicons } from "@expo/vector-icons";
 const validateFields = (email, password) => {
   const isValid = {
     email: validator.isEmail(email),
-    password: validator.isStrongPassword(password, {
-      minLength: 8,
-      //   minLowercase: 1,
-      //   minUppercase: 1,
-      //   minNumbers: 1,
-      //   minSymbols: 1,
-    }),
+    password: validator.isStrongPassword(password),
   };
   return isValid;
 };
@@ -46,43 +47,119 @@ export default () => {
     text: "",
     errorMessage: "",
   });
-
   return (
-    <View style={styles.container}>
-      <Text style={styles.header}>Login</Text>
-      <View style={{ flex: 1 }}>
-        <Input
-          label="Email"
-          text={emailField.text}
-          onChangeText={(text) => {
-            setEmailField({ text });
-          }}
-          errorMessage={emailField.errorMessage}
-          labelStyle={styles.label}
-          autoCompleteStyle={"email"}
-        />
-        <Input
-          label="Password"
-          text={passwordField.text}
-          secureTextEntry={true}
-          onChangeText={(text) => {
-            setPasswordField({ text });
-          }}
-          errorMessage={passwordField.errorMessage}
-          labelStyle={styles.label}
-          autoCompleteStyle={"password"}
-        />
-        {isCreatingAccountMode && (
+    <View style={globalStyles.container}>
+      <View style={{ marginVertical: "70%" }}>
+        <Text style={globalStyles.titleText}>Zaloguj się!</Text>
+        <Text style={{ marginLeft: 20, marginVertical: 3 }}>Email</Text>
+        <View style={globalStyles.InputView}>
+          <MaterialIcons name="mail" color="black" size={35} />
           <Input
-            label="Re-enter Password"
-            text={passwordReentryField.text}
+            placeholder={"Wpisz Email"}
+            text={emailField.text}
+            onChangeText={(text) => {
+              setEmailField({ text });
+            }}
+            errorMessage={emailField.errorMessage}
+            labelStyle={globalStyles.input}
+            autoCompleteStyle={"email"}
+          />
+        </View>
+        <Text style={{ marginLeft: 20, marginVertical: 3 }}>Hasło</Text>
+        <View style={globalStyles.InputView}>
+          <MaterialIcons name="lock" color="black" size={35} />
+          <Input
+            placeholder="Wpisz hasło"
+            text={passwordField.text}
             secureTextEntry={true}
             onChangeText={(text) => {
-              setPasswordReentryField({ text });
+              setPasswordField({ text });
             }}
-            errorMessage={passwordReentryField.errorMessage}
-            labelStyle={styles.label}
+            errorMessage={passwordField.errorMessage}
+            labelStyle={globalStyles.input}
+            autoCompleteStyle={"password"}
           />
+        </View>
+
+        {isCreatingAccountMode && (
+          <View>
+            <Text style={{ marginLeft: 20, marginVertical: 3 }}>
+              Powtórz hasło
+            </Text>
+            <View style={globalStyles.InputView}>
+              <MaterialIcons name="lock" color="black" size={35} />
+              <Input
+                placeholder="Wpisz hasło"
+                text={passwordReentryField.text}
+                secureTextEntry={true}
+                onChangeText={(text) => {
+                  setPasswordReentryField({ text });
+                }}
+                errorMessage={passwordReentryField.errorMessage}
+                labelStyle={globalStyles.input}
+              />
+            </View>
+          </View>
+        )}
+        {!isCreatingAccountMode ? (
+          <TouchableOpacity
+            style={globalStyles.buttons}
+            onPress={() => {
+              const isValid = validateFields(
+                emailField.text,
+                passwordField.text
+              );
+              let isAllValid = true;
+              if (!isValid.email) {
+                emailField.errorMessage = "Invalid email";
+                setEmailField({ ...emailField });
+                isAllValid = false;
+              }
+              if (!isValid.password) {
+                passwordField.errorMessage = "Invalid password";
+                setPasswordField({ ...passwordField });
+                isAllValid = false;
+              }
+              if (isAllValid) {
+                login(emailField.text, passwordField.text);
+              }
+            }}
+          >
+            <Text style={globalStyles.buttonsText}>Zaloguj</Text>
+          </TouchableOpacity>
+        ) : (
+          <TouchableOpacity
+            style={globalStyles.buttons}
+            onPress={() => {
+              const isValid = validateFields(
+                emailField.text,
+                passwordField.text
+              );
+              let isAllValid = true;
+              if (!isValid.email) {
+                emailField.errorMessage = "Invalid email";
+                setEmailField({ ...emailField });
+                isAllValid = false;
+              }
+              if (!isValid.password) {
+                passwordField.errorMessage =
+                  "Password must have 8 long with  , one number ,uppercase , lowecase and symbol don't use '!' and '@'";
+                setPasswordField({ ...passwordField });
+                isAllValid = false;
+              }
+
+              if (passwordReentryField.text != passwordField.text) {
+                passwordReentryField.errorMessage = "Password don't match";
+                setPasswordReentryField({ ...passwordReentryField });
+                isAllValid = false;
+              }
+              if (isAllValid) {
+                createAccount(emailField.text, passwordField.text);
+              }
+            }}
+          >
+            <Text style={globalStyles.buttonsText}>Zarejestruj się</Text>
+          </TouchableOpacity>
         )}
 
         <TouchableOpacity
@@ -90,83 +167,13 @@ export default () => {
             setCreatingAccountMode(!isCreatingAccountMode);
           }}
         >
-          <Text
-            style={{
-              alignSelf: "center",
-              color: "blue",
-              fontSize: 16,
-              margin: 4,
-            }}
-          >
+          <Text style={{ marginLeft: 20, marginVertical: 3, fontSize: 20 }}>
             {isCreatingAccountMode
-              ? "Already have an account ?"
-              : "Create new account"}
+              ? "Chcesz się zalogować ?"
+              : "Nie masz konta ?"}
           </Text>
         </TouchableOpacity>
       </View>
-      <TouchableOpacity
-        style={styles.button}
-        onPress={() => {
-          const isValid = validateFields(emailField.text, passwordField.text);
-          let isAllValid = true;
-          if (!isValid.email) {
-            emailField.errorMessage = "Invalid email";
-            setEmailField({ ...emailField });
-            isAllValid = false;
-          }
-          if (!isValid.password) {
-            passwordField.errorMessage =
-              "Password must have 8 long with one number , uppercase , lowecase and symbol";
-            setPasswordField({ ...passwordField });
-            isAllValid = false;
-          }
-
-          if (
-            isCreatingAccountMode &&
-            passwordReentryField.text != passwordField.text
-          ) {
-            passwordReentryField.errorMessage = "Password don't match";
-            setPasswordReentryField({ ...passwordReentryField });
-            isAllValid = false;
-          }
-          if (isAllValid) {
-            isCreatingAccountMode
-              ? createAccount(emailField.text, passwordField.text)
-              : login(emailField.text, passwordField.text);
-          }
-        }}
-      >
-        <Text style={{ color: "red", fontSize: 24, fontWeight: "bold" }}>
-          {isCreatingAccountMode ? "Create Account" : "Login"}
-        </Text>
-      </TouchableOpacity>
     </View>
   );
 };
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    justifyContent: "space-between",
-    alignItems: "stretch",
-  },
-  header: {
-    fontSize: 72,
-    color: "red",
-    alignSelf: "center",
-  },
-  label: {
-    fontSize: 16,
-    fontWeight: "bold",
-    color: "black",
-  },
-  button: {
-    flexDirection: "row",
-    borderRadius: 25,
-    backgroundColor: "black",
-    height: 50,
-    margin: 15,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-});

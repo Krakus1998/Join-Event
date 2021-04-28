@@ -8,6 +8,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import * as Firebase from "firebase";
 import Drawer from "./routes/drawer";
+import { BrowserRouter, Route } from "react-router-dom";
 const getFonts = () =>
   Font.loadAsync({
     "nunito-regular": require("./assets/fonts/Nunito-Regular.ttf"),
@@ -16,7 +17,12 @@ const getFonts = () =>
     "Audiowide-Regular": require("./assets/fonts/Audiowide-Regular.ttf"),
     // 'AR DESTINE-regular': require('./assets/fonts/AR DESTINE.ttf'),
   });
-
+const Stack = createStackNavigator();
+const EditStackScreen = () => (
+  <Stack.Navigator>
+    <Stack.Screen name="Home" component={Edit} />
+  </Stack.Navigator>
+);
 export default function App() {
   const [fontsLoaded, setFontsLoaded] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -36,8 +42,6 @@ export default function App() {
   if (fontsLoaded) {
     return (
       // <Home />
-      // <Navigator />
-
       isAuthenticated ? <Drawer /> : <Navigator />
     );
   } else {
